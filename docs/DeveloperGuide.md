@@ -308,9 +308,8 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 1. User decides to hide the real application interface.
 2. User enters the command `lock`.
-3. SpyGlass saves the current locked state to a local configuration file.
-4. SpyGlass switches the UI from the real application view to the Dummy view.
-5. SpyGlass continues operating as a normal-looking dummy addressbook application.
+3. SpyGlass switches the UI from the real application view to the Dummy view.
+4. SpyGlass continues operating as a normal-looking addressbook application.
 
    Use case ends.
 
@@ -318,20 +317,20 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 2a. The command entered is invalid.
 
-  * 2a1. SpyGlass shows `Unknown command: [input]`.
+  * 2a1. SpyGlass shows an error message.
 
   Use case ends.
 
-* 4a. The user performs operations while the system is locked.
+* 3a. The user performs operations while the system is locked.
 
-  * 4a1. SpyGlass accepts the operation.
-  * 4a2. SpyGlass stores the data in Dummy storage instead of secure storage.
+  * 3a1. SpyGlass accepts the operation.
+  * 3a2. SpyGlass stores the data in Dummy storage instead of secure storage.
 
   Use case ends.
 
-* 5a. The application is force closed while locked.
+* 4a. The application is force closed while unlocked.
 
-  * 5a1. On next startup, SpyGlass restores the Dummy view by default.
+  * 4a1. On next startup, SpyGlass restores the Dummy view by default.
 
   Use case ends.
 
@@ -342,11 +341,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User is currently interacting with the Dummy view.
-2. User enters the secret password in the command box.
-3. SpyGlass verifies the input against the stored password.
-4. SpyGlass switches the UI from the Dummy view to the real application interface.
-5. SpyGlass loads and displays the real contact database.
-6. SpyGlass shows the message `App unlocked. Welcome back.`
+2. User enters the secret password previously set.
+3. SpyGlass switches the UI from the Dummy view to the real application interface.
+4. SpyGlass loads the real contact list and shows success message
 
    Use case ends.
 
@@ -355,13 +352,13 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 * 3a. The entered password is incorrect.
 
   * 3a1. SpyGlass remains in the Dummy view.
-  * 3a2. SpyGlass shows `Unknown command: [input]`.
+  * 3a2. SpyGlass shows an error message.
 
   Use case ends.
 
 * 3b. Multiple rapid incorrect password attempts occur.
 
-  * 3b1. SpyGlass continues displaying `Unknown command`.
+  * 3b1. SpyGlass continues displaying unknown command error message.
   * 3b2. SpyGlass temporarily delays processing of further inputs.
 
   Use case ends.
@@ -373,12 +370,9 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 **MSS**
 
 1. User requests to add a contact with required details.
-2. User enters the `add` command with name, phone, email and address.
-3. SpyGlass validates the input parameters.
-4. SpyGlass checks whether the contact already exists.
-5. SpyGlass saves the new contact to storage.
-6. SpyGlass updates the contact list display.
-7. SpyGlass shows a confirmation message with the contact details.
+2. User adds the new contact with relevant details.
+3. SpyGlass saves the new contact and updates the contact list display.
+4. SpyGlass updates the command history to show user added a new contact.
 
    Use case ends.
 
@@ -398,7 +392,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. The contact already exists.
 
-  * 4a1. SpyGlass shows the message `This contact already exists`.
+  * 4a1. SpyGlass shows an error message indicating the contact already exists.
 
   Use case ends.
 
@@ -413,6 +407,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 3. User requests to delete a specific contact in the list by index.
 4. SpyGlass deletes the contact.
 5. SpyGlass updates the contact list display.
+6. SpyGlass updates the command history to reflect user deleted a contact.
 
    Use case ends.
 
@@ -430,7 +425,7 @@ Priorities: High (must have) - `* * *`, Medium (nice to have) - `* *`, Low (unli
 
 * 4a. SpyGlass fails to save the deletion to storage.
 
-  * 4a1. SpyGlass shows `Failed to save data. Your changes may not be preserved`.
+  * 4a1. SpyGlass shows  an error message indicating storage failed.
 
   Use case ends.
 
