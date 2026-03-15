@@ -12,8 +12,11 @@ import seedu.address.commons.core.LogsCenter;
 
 /**
  * Controller for the password setup window.
+ * This window is responsible for capturing the initial application password
+ * and providing visual feedback for validation errors.
  */
 public class PasswordWindow extends UiPart<Stage> {
+
     private static final String FXML = "PasswordWindow.fxml";
     private final Logger logger = LogsCenter.getLogger(getClass());
 
@@ -26,14 +29,20 @@ public class PasswordWindow extends UiPart<Stage> {
     private Label errorMessage;
 
     /**
-     * Creates a new PasswordWindow with specified settings.
+     * Creates a new {@code PasswordWindow} with the default stage and specified settings.
+     *
+     * @param guiSettings The GUI settings to determine the initial window size and position.
      */
     public PasswordWindow(GuiSettings guiSettings) {
         this(new Stage(), guiSettings);
     }
 
     /**
-     * Creates a new PasswordWindow using the given Stage as the root.
+     * Creates a new {@code PasswordWindow} using the given {@code root} stage.
+     * Sets up listeners to clear error states when the user interacts with the input field.
+     *
+     * @param root Stage to use as the root of the PasswordWindow.
+     * @param guiSettings The GUI settings to determine the initial window size and position.
      */
     public PasswordWindow(Stage root, GuiSettings guiSettings) {
         super(FXML, root);
@@ -41,8 +50,14 @@ public class PasswordWindow extends UiPart<Stage> {
 
         root.setMinWidth(450);
         root.setMinHeight(400);
+
+        // Listener to clear error as soon as user starts typing
+        passwordInput.textProperty().addListener((observable, oldValue, newValue) -> clearError());
     }
 
+    /**
+     * Sets the default size and position of the window based on {@code guiSettings}.
+     */
     private void setWindowDefaultSize(Stage stage, GuiSettings guiSettings) {
         stage.setHeight(guiSettings.getWindowHeight());
         stage.setWidth(guiSettings.getWindowWidth());
@@ -52,21 +67,46 @@ public class PasswordWindow extends UiPart<Stage> {
         }
     }
 
+    /**
+     * Shows the password window and waits for the user to close it.
+     */
     public void show() {
         logger.fine("Showing password setup window.");
         getRoot().showAndWait();
     }
 
+    /**
+     * Returns the password entered by the user, wrapped in an {@code Optional}.
+     * Returns an empty {@code Optional} if the user closed the window without entering a password.
+     */
     public Optional<String> getPassword() {
         return Optional.ofNullable(passwordEntered);
     }
 
+    /**
+     * Resets the error message and clears error styling from UI components.
+     */
+    private void clearError() {
+        errorMessage.getStyleClass().remove("error");
+        passwordInput.getStyleClass().remove("error");
+        errorMessage.setText("The application requires a password to initialise.");
+    }
+
+    /**
+     * Handles the event when the user attempts to submit a password.
+     * Validates that the input is not empty before closing the window.
+     */
     @FXML
     private void handleLogin() {
         String input = passwordInput.getText();
+
+        clearError();
+
         if (input == null || input.trim().isEmpty()) {
             errorMessage.setText("Password cannot be empty!");
+            errorMessage.getStyleClass().add("error");
             passwordInput.getStyleClass().add("error");
+            logger.info("Empty password attempt blocked.");
         } else {
             passwordEntered = input;
             getRoot().close();
