@@ -2,8 +2,10 @@ package seedu.address.security;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertTrue;
 
+import java.nio.file.Files;
 import java.nio.file.Path;
 import java.util.Optional;
 
@@ -60,6 +62,26 @@ public class SecurityManagerTest {
 
         assertFalse(securityManager.isAuthenticated());
         assertFalse(FileUtil.isFileExists(passwordFile));
+    }
+
+    @Test
+    public void savePassword_pathIsDirectory_returnsFalse() throws Exception {
+        Path directoryPath = temporaryFolder.resolve("i_am_a_directory");
+        Files.createDirectories(directoryPath);
+
+        SecurityManager securityManager = new SecurityManager(
+                new LogicStub(),
+                directoryPath,
+                () -> Optional.of("validPassword")
+        );
+
+        assertFalse(securityManager.isAuthenticated());
+    }
+
+    @Test
+    public void constructor_production_isNotNull() {
+        // smoke test for the production constructor
+        assertNotNull(new SecurityManager(new LogicStub()));
     }
 
     /**
