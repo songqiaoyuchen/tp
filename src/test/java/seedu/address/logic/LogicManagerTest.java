@@ -183,14 +183,14 @@ public class LogicManagerTest {
     }
 
     @Test
-    public void execute_lockedMode_listBlockedAsUnknownCommand() {
+    public void execute_lockedMode_listCommandAllowed() throws Exception {
         JsonAddressBookStorage addressBookStorage =
                 new JsonAddressBookStorage(temporaryFolder.resolve("lockedAddressBook.json"));
         JsonUserPrefsStorage userPrefsStorage = new JsonUserPrefsStorage(temporaryFolder.resolve("lockedUserPrefs.json"));
         StorageManager storage = new StorageManager(addressBookStorage, userPrefsStorage);
         logic = new LogicManager(model, storage, new AppModeManager(AppMode.LOCKED));
 
-        assertParseException(ListCommand.COMMAND_WORD, MESSAGE_UNKNOWN_COMMAND);
+        assertCommandSuccess(ListCommand.COMMAND_WORD, ListCommand.MESSAGE_SUCCESS, model);
     }
 
     @Test
