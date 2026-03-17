@@ -11,6 +11,7 @@ import org.junit.jupiter.api.Test;
 
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
+import seedu.address.logic.AppMode;
 import seedu.address.logic.Logic;
 import seedu.address.logic.commands.CommandResult;
 import seedu.address.model.ReadOnlyAddressBook;
@@ -114,6 +115,11 @@ public class SecurityManagerTest {
         @Override
         public void setGuiSettings(GuiSettings guiSettings) {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public AppMode getCurrentMode() {
+            return AppMode.LOCKED;
         }
     }
 }
