@@ -14,7 +14,10 @@ import seedu.address.model.Model;
 public class UnlockCommand extends Command {
     public static final String COMMAND_WORD = "unlock";
     public static final String MESSAGE_SUCCESS = "Switched to Unlocked Interface.";
-    public static final String MESSAGE_ALREADY_UNLOCKED = "The application is already unlocked.";
+    public static final String MESSAGE_USAGE = COMMAND_WORD + ": Unlocks the application using the password.\n"
+            + "Example: " + COMMAND_WORD + " myPassword123";
+    public static final String MESSAGE_ALREADY_UNLOCKED = "The application is already unlocked.\n"
+            + MESSAGE_USAGE;
 
     private final String providedPassword;
 
