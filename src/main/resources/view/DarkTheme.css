@@ -29,16 +29,21 @@
     -fx-font-family: "Segoe UI Semibold";
 }
 
+/* Unused currently (no TabPane in current FXML/Java)
 .tab-pane {
     -fx-padding: 0 0 0 1;
 }
+*/
 
+/* Unused currently (no TabPane in current FXML/Java)
 .tab-pane .tab-header-area {
     -fx-padding: 0 0 0 0;
     -fx-min-height: 0;
     -fx-max-height: 0;
 }
+*/
 
+/* Unused currently (no TableView in current FXML/Java)
 .table-view {
     -fx-base: #1d1d1d;
     -fx-control-inner-background: #1d1d1d;
@@ -47,11 +52,15 @@
     -fx-table-header-border-color: transparent;
     -fx-padding: 5;
 }
+*/
 
+/* Unused currently (no TableView in current FXML/Java)
 .table-view .column-header-background {
     -fx-background-color: transparent;
 }
+*/
 
+/* Unused currently (no TableView in current FXML/Java)
 .table-view .column-header, .table-view .filler {
     -fx-size: 35;
     -fx-border-width: 0 0 1 0;
@@ -63,7 +72,9 @@
         transparent;
     -fx-border-insets: 0 10 1 0;
 }
+*/
 
+/* Unused currently (no TableView in current FXML/Java)
 .table-view .column-header .label {
     -fx-font-size: 20pt;
     -fx-font-family: "Segoe UI Light";
@@ -71,21 +82,28 @@
     -fx-alignment: center-left;
     -fx-opacity: 1;
 }
+*/
 
+/* Unused currently (no TableView in current FXML/Java)
 .table-view:focused .table-row-cell:filled:focused:selected {
     -fx-background-color: -fx-focus-color;
 }
+*/
 
+/* Unused currently (no SplitPane in current FXML/Java)
 .split-pane:horizontal .split-pane-divider {
     -fx-background-color: derive(#1d1d1d, 20%);
     -fx-border-color: transparent transparent transparent #4d4d4d;
 }
+*/
 
+/* Unused currently (no SplitPane in current FXML/Java)
 .split-pane {
     -fx-border-radius: 1;
     -fx-border-width: 1;
     -fx-background-color: derive(#1d1d1d, 20%);
 }
+*/
 
 .list-view {
     -fx-background-insets: 0;
@@ -164,15 +182,19 @@
     -fx-pref-height: 30px;
 }
 
+/* Unused currently (no node with styleClass="status-bar-with-border")
 .status-bar-with-border {
     -fx-background-color: derive(#1d1d1d, 30%);
     -fx-border-color: derive(#1d1d1d, 25%);
     -fx-border-width: 1px;
 }
+*/
 
+/* Unused currently (no node with styleClass="status-bar-with-border")
 .status-bar-with-border .label {
     -fx-text-fill: white;
 }
+*/
 
 .grid-pane {
     -fx-background-color: derive(#1d1d1d, 30%);
@@ -312,10 +334,12 @@
     -fx-border-width: 0;
 }
 
+/* Unused currently (no node with id="commandTypeLabel")
 #commandTypeLabel {
     -fx-font-size: 11px;
     -fx-text-fill: #F70D1A;
 }
+*/
 
 #commandTextField {
     -fx-background-color: transparent #383838 transparent #383838;
@@ -328,9 +352,11 @@
     -fx-text-fill: white;
 }
 
+/* Unused currently (ids not found in current FXML/Java)
 #filterField, #personListPanel, #personWebpage {
     -fx-effect: innershadow(gaussian, black, 10, 0, 0, 0);
 }
+*/
 
 #resultDisplay .content {
     -fx-background-color: transparent, #383838, transparent, #383838;
