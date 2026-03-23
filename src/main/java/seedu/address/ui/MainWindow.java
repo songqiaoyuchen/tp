@@ -114,6 +114,13 @@ public class MainWindow extends UiPart<Stage> {
         // Initialise the UI to the current mode (should be LOCKED at startup)
         updateUi(logic.getCurrentMode());
 
+        // Listen to selectedPerson changes and update UI selection
+        logic.selectedPersonProperty().addListener((obs, oldVal, newVal) -> {
+            if (newVal != null) {
+                personListPanel.select(newVal);
+            }
+        });
+
         // summaryPlaceholder is a layout placeholder for now.
     }
 

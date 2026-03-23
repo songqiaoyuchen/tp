@@ -26,6 +26,20 @@ public class PersonListPanel extends UiPart<Region> {
     }
 
     /**
+     * Selects the given person in the list and scrolls to make it visible.
+     * Uses ListView's built-in selection model and scrollTo for minimal scrolling.
+     *
+     * @param person the person to select (must be in the current filtered list)
+     */
+    public void select(Person person) {
+        int index = personListView.getItems().indexOf(person);
+        if (index >= 0) {
+            personListView.scrollTo(index);
+            personListView.getSelectionModel().select(index);
+        }
+    }
+
+    /**
      * Custom {@code ListCell} that displays the graphics of a {@code Person} using a {@code PersonCard}.
      */
     class PersonListViewCell extends ListCell<Person> {
