@@ -90,6 +90,14 @@ public class LogicManagerTest {
                 logic.getFilteredPersonList().remove(0));
     }
 
+    @Test
+    public void selectedPersonProperty_modelSelectionUpdated_propertyReflectsSelection() {
+        model.addPerson(AMY, AppMode.UNLOCKED);
+        Person selectedPerson = model.getFilteredPersonList(AppMode.UNLOCKED).get(0);
+        model.setSelectedPerson(selectedPerson);
+        assertEquals(selectedPerson, logic.selectedPersonProperty().get());
+    }
+
     /**
      * Executes the command and confirms that
      * - no exceptions are thrown <br>
