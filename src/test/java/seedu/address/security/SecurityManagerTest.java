@@ -10,6 +10,8 @@ import java.util.Optional;
 
 import org.junit.jupiter.api.Test;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
+import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.AppMode;
@@ -107,6 +109,7 @@ public class SecurityManagerTest {
      */
     private static class LogicStub implements Logic {
         private String password = "";
+        private final SimpleObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
 
         @Override
         public String getAddressBookPassword() {
@@ -141,6 +144,11 @@ public class SecurityManagerTest {
         @Override
         public ObservableList<Person> getFilteredPersonList() {
             throw new AssertionError("This method should not be called.");
+        }
+
+        @Override
+        public ReadOnlyObjectProperty<Person> selectedPersonProperty() {
+            return selectedPerson;
         }
 
         @Override

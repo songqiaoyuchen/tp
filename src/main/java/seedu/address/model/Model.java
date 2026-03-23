@@ -3,6 +3,7 @@ package seedu.address.model;
 import java.nio.file.Path;
 import java.util.function.Predicate;
 
+import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.AppMode;
@@ -108,6 +109,16 @@ public interface Model {
      * @throws NullPointerException if {@code predicate} or {@code appMode} is null.
      */
     void updateFilteredPersonList(Predicate<Person> predicate, AppMode appMode);
+
+    /**
+     * Sets the currently selected person in the active UI context.
+     */
+    void setSelectedPerson(Person person);
+
+    /**
+     * Returns the selected person property.
+     */
+    ReadOnlyObjectProperty<Person> selectedPersonProperty();
 
     /**
      * Returns the password of the address book.
