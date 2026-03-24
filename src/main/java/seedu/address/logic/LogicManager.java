@@ -61,7 +61,10 @@ public class LogicManager implements Logic {
         Command command = addressBookParser.parseCommand(commandText);
         CommandContext context = new CommandContext(model, modeManager.getMode());
         CommandResult commandResult = command.execute(context);
-        commandResult.getRequestedMode().ifPresent(modeManager::transitionTo);
+        commandResult.getRequestedMode().ifPresent(mode -> {
+            modeManager.transitionTo(mode);
+            model.setSelectedPerson(null);
+        });
 
         try {
             storage.saveAddressBook(model.getAddressBook());

@@ -121,6 +121,11 @@ public class ModelManager implements Model {
         } else {
             addressBook.removeUnlockedPerson(target);
         }
+
+        // Clear selection if deleted person was selected
+        if (target.equals(selectedPerson.get())) {
+            selectedPerson.set(null);
+        }
     }
 
     @Override
@@ -132,6 +137,10 @@ public class ModelManager implements Model {
         } else {
             addressBook.clearUnlockedPersons();
         }
+
+        // Clear selection when persons are cleared
+        selectedPerson.set(null);
+
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, appMode);
     }
 
@@ -187,7 +196,6 @@ public class ModelManager implements Model {
 
     @Override
     public void setSelectedPerson(Person person) {
-        requireNonNull(person);
         selectedPerson.set(person);
     }
 

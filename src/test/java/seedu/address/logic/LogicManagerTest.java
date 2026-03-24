@@ -1,6 +1,7 @@
 package seedu.address.logic;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertNull;
 import static seedu.address.logic.Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX;
 import static seedu.address.logic.Messages.MESSAGE_UNKNOWN_COMMAND;
 import static seedu.address.logic.commands.CommandTestUtil.ADDRESS_DESC_AMY;
@@ -96,6 +97,14 @@ public class LogicManagerTest {
         Person selectedPerson = model.getFilteredPersonList(AppMode.UNLOCKED).get(0);
         model.setSelectedPerson(selectedPerson);
         assertEquals(selectedPerson, logic.selectedPersonProperty().get());
+    }
+
+    @Test
+    public void selectedPersonProperty_personDeleted_selectionClears() {
+        model.addPerson(AMY, AppMode.UNLOCKED);
+        model.setSelectedPerson(AMY);
+        model.deletePerson(AMY, AppMode.UNLOCKED);
+        assertNull(logic.selectedPersonProperty().get());
     }
 
     /**
@@ -205,6 +214,9 @@ public class LogicManagerTest {
 
     @Test
     public void execute_unlockThenLock_bothCommandsSucceed() throws Exception {
+        model.addPerson(AMY, AppMode.LOCKED);
+        model.setSelectedPerson(AMY);
+
         JsonAddressBookStorage addressBookStorage =
                 new JsonAddressBookStorage(temporaryFolder.resolve("modeTransitionAddressBook.json"));
         JsonUserPrefsStorage userPrefsStorage =
@@ -214,8 +226,10 @@ public class LogicManagerTest {
 
         CommandResult unlockResult = logic.execute(UnlockCommand.COMMAND_WORD);
         assertEquals(UnlockCommand.MESSAGE_SUCCESS, unlockResult.getFeedbackToUser());
+        assertNull(logic.selectedPersonProperty().get());
 
         CommandResult lockResult = logic.execute(LockCommand.COMMAND_WORD);
         assertEquals(LockCommand.MESSAGE_SUCCESS, lockResult.getFeedbackToUser());
+        assertNull(logic.selectedPersonProperty().get());
     }
 }

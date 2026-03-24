@@ -118,6 +118,8 @@ public class MainWindow extends UiPart<Stage> {
         logic.selectedPersonProperty().addListener((obs, oldVal, newVal) -> {
             if (newVal != null) {
                 personListPanel.select(newVal);
+            } else {
+                personListPanel.clearSelection();
             }
         });
 
