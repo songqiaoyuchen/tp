@@ -287,6 +287,9 @@ public class LogicManagerTest {
 
     @Test
     public void execute_lockCommand_updatesCurrentModeToLocked() throws Exception {
+        // Transition to UNLOCKED first (current mode is LOCKED after setUp)
+        logic.setAddressBookPassword("validPassword123");
+        logic.execute(UnlockCommand.COMMAND_WORD + " validPassword123");
         assertEquals(AppMode.UNLOCKED, logic.getCurrentMode());
 
         CommandResult lockResult = logic.execute(LockCommand.COMMAND_WORD);
@@ -296,6 +299,9 @@ public class LogicManagerTest {
 
     @Test
     public void execute_listCommand_doesNotChangeCurrentMode() throws Exception {
+        // Transition to UNLOCKED first (current mode is LOCKED after setUp)
+        logic.setAddressBookPassword("validPassword123");
+        logic.execute(UnlockCommand.COMMAND_WORD + " validPassword123");
         assertEquals(AppMode.UNLOCKED, logic.getCurrentMode());
 
         CommandResult listResult = logic.execute(ListCommand.COMMAND_WORD);
