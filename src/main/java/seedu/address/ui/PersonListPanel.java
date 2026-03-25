@@ -26,6 +26,12 @@ public class PersonListPanel extends UiPart<Region> {
         personListView.setCellFactory(listView -> new PersonListViewCell());
     }
 
+    public void setOnSelectionChange(java.util.function.Consumer<Person> onSelectionChange) {
+        personListView.getSelectionModel().selectedItemProperty().addListener((observable, oldValue, newValue) -> {
+            onSelectionChange.accept(newValue);
+        });
+    }
+
     /**
      * Selects the given person in the list and scrolls to make it visible.
      * Uses ListView's built-in selection model and scrollTo for minimal scrolling.

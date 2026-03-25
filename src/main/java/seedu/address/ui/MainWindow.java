@@ -34,6 +34,7 @@ public class MainWindow extends UiPart<Stage> {
     // Independent Ui parts residing in this Ui container
     private PersonListPanel personListPanel;
     private ResultHistory resultHistory;
+    private PersonDetailPanel personDetailPanel;
     private CommandBox commandBox;
     private HelpWindow helpWindow;
 
@@ -47,7 +48,7 @@ public class MainWindow extends UiPart<Stage> {
     private StackPane resultHistoryPlaceholder;
 
     @FXML
-    private StackPane summaryPlaceholder;
+    private StackPane personDetailPlaceholder;
 
     /**
      * Creates a {@code MainWindow} with the given {@code Stage} and {@code Logic}.
@@ -104,6 +105,10 @@ public class MainWindow extends UiPart<Stage> {
      * Fills up all the placeholders of this window.
      */
     void fillInnerParts() {
+        // personDetailPlaceholder is empty by default until a person is selected
+        personDetailPanel = new PersonDetailPanel();
+        personDetailPlaceholder.getChildren().add(personDetailPanel.getRoot());
+
         refreshPersonListPanel();
 
         resultHistory = new ResultHistory();
@@ -114,8 +119,6 @@ public class MainWindow extends UiPart<Stage> {
 
         // Initialise the UI to the current mode (should be LOCKED at startup)
         updateUi(logic.getCurrentMode());
-
-        // summaryPlaceholder is a layout placeholder for now.
     }
 
     /**
@@ -132,6 +135,9 @@ public class MainWindow extends UiPart<Stage> {
 
     private void refreshPersonListPanel() {
         personListPanel = new PersonListPanel(logic.getFilteredPersonList());
+        personListPanel.setOnSelectionChange(person -> {
+            personDetailPanel.setPerson(person);
+        });
         personListPanelPlaceholder.getChildren().setAll(personListPanel.getRoot());
     }
 
@@ -154,6 +160,7 @@ public class MainWindow extends UiPart<Stage> {
         boolean isLocked = mode == AppMode.LOCKED;
         primaryStage.setTitle(isLocked ? "AddressBook" : "Spyglass");
         refreshPersonListPanel();
+        personDetailPanel.clearPerson();
     }
 
     void show() {
