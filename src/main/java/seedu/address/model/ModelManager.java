@@ -7,9 +7,6 @@ import java.nio.file.Path;
 import java.util.function.Predicate;
 import java.util.logging.Logger;
 
-import javafx.beans.property.ObjectProperty;
-import javafx.beans.property.ReadOnlyObjectProperty;
-import javafx.beans.property.SimpleObjectProperty;
 import javafx.collections.ObservableList;
 import javafx.collections.transformation.FilteredList;
 import seedu.address.commons.core.GuiSettings;
@@ -27,7 +24,6 @@ public class ModelManager implements Model {
     private final UserPrefs userPrefs;
     private final FilteredList<Person> filteredLockedPersons;
     private final FilteredList<Person> filteredUnlockedPersons;
-    private final ObjectProperty<Person> selectedPerson = new SimpleObjectProperty<>();
 
     /**
      * Initializes a ModelManager with the given addressBook and userPrefs.
@@ -121,11 +117,6 @@ public class ModelManager implements Model {
         } else {
             addressBook.removeUnlockedPerson(target);
         }
-
-        // Clear selection if deleted person was selected
-        if (target.equals(selectedPerson.get())) {
-            selectedPerson.set(null);
-        }
     }
 
     @Override
@@ -137,9 +128,6 @@ public class ModelManager implements Model {
         } else {
             addressBook.clearUnlockedPersons();
         }
-
-        // Clear selection when persons are cleared
-        selectedPerson.set(null);
 
         updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, appMode);
     }
@@ -192,16 +180,6 @@ public class ModelManager implements Model {
     public void updateFilteredPersonList(Predicate<Person> predicate, AppMode appMode) {
         requireAllNonNull(predicate, appMode);
         getFilteredList(appMode).setPredicate(predicate);
-    }
-
-    @Override
-    public void setSelectedPerson(Person person) {
-        selectedPerson.set(person);
-    }
-
-    @Override
-    public ReadOnlyObjectProperty<Person> selectedPersonProperty() {
-        return selectedPerson;
     }
 
     private boolean isLockedMode(AppMode appMode) {

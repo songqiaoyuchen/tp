@@ -5,6 +5,7 @@ import javafx.fxml.FXML;
 import javafx.scene.control.ListCell;
 import javafx.scene.control.ListView;
 import javafx.scene.layout.Region;
+import seedu.address.commons.core.index.Index;
 import seedu.address.model.person.Person;
 
 /**
@@ -36,6 +37,17 @@ public class PersonListPanel extends UiPart<Region> {
         if (index >= 0) {
             personListView.scrollTo(index);
             personListView.getSelectionModel().select(index);
+        }
+    }
+
+    /**
+     * Selects the given 1-based index in the list and scrolls to make it visible.
+     */
+    public void select(Index index) {
+        int zeroBasedIndex = index.getZeroBased();
+        if (zeroBasedIndex >= 0 && zeroBasedIndex < personListView.getItems().size()) {
+            personListView.scrollTo(zeroBasedIndex);
+            personListView.getSelectionModel().select(zeroBasedIndex);
         }
     }
 

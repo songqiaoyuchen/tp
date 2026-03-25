@@ -9,7 +9,6 @@ import java.util.function.Predicate;
 
 import org.junit.jupiter.api.Test;
 
-import javafx.beans.property.ReadOnlyObjectProperty;
 import javafx.collections.ObservableList;
 import seedu.address.commons.core.GuiSettings;
 import seedu.address.logic.AppMode;
@@ -141,14 +140,5 @@ public class LockCommandTest {
             throw new AssertionError("This method should not be called.");
         }
 
-        @Override
-        public void setSelectedPerson(Person person) {
-            throw new AssertionError("This method should not be called.");
-        }
-
-        @Override
-        public ReadOnlyObjectProperty<Person> selectedPersonProperty() {
-            throw new AssertionError("This method should not be called.");
-        }
     }
 }
