@@ -205,6 +205,7 @@ public class MainWindow extends UiPart<Stage> {
     private void updateUi(AppMode mode) {
         boolean isLocked = mode == AppMode.LOCKED;
         primaryStage.setTitle(isLocked ? "AddressBook" : "Spyglass");
+        personDetailPanel.updateMode(mode);
         personDetailPanel.clearPerson();
         refreshPersonListPanel();
     }
