@@ -86,11 +86,7 @@ public class AddCommand extends Command {
         AppMode appMode = context.getAppMode();
 
         Person personToAdd = createPersonForMode(appMode);
-        Person personToOverride = findSamePerson(model, personToAdd);
-
-        if (personToOverride != null) {
-            model.deletePerson(personToOverride, appMode);
-        }
+        CommandUtil.resolveDuplicateConflict(model, personToAdd, appMode, null);
 
         model.addPerson(personToAdd, appMode);
 
@@ -111,13 +107,6 @@ public class AddCommand extends Command {
 
     private static PersonStatus getStatusForMode(AppMode appMode) {
         return appMode == AppMode.LOCKED ? PersonStatus.LOCKED : PersonStatus.UNLOCKED;
-    }
-
-    private static Person findSamePerson(Model model, Person target) {
-        return model.getPersonList().stream()
-                .filter(target::isSamePerson)
-                .findFirst()
-                .orElse(null);
     }
 
     @Override
