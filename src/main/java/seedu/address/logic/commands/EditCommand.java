@@ -18,6 +18,7 @@ import java.util.Set;
 import seedu.address.commons.core.index.Index;
 import seedu.address.commons.util.CollectionUtil;
 import seedu.address.commons.util.ToStringBuilder;
+import seedu.address.logic.AppMode;
 import seedu.address.logic.Messages;
 import seedu.address.logic.commands.exceptions.CommandException;
 import seedu.address.model.Model;
@@ -70,7 +71,8 @@ public class EditCommand extends Command {
     public CommandResult execute(CommandContext context) throws CommandException {
         requireNonNull(context);
         Model model = context.getModel();
-        List<Person> lastShownList = model.getFilteredPersonList(context.getAppMode());
+        AppMode appMode = context.getAppMode();
+        List<Person> lastShownList = model.getFilteredPersonList(appMode);
 
         if (index.getZeroBased() >= lastShownList.size()) {
             throw new CommandException(Messages.MESSAGE_INVALID_PERSON_DISPLAYED_INDEX);
@@ -78,14 +80,11 @@ public class EditCommand extends Command {
 
         Person personToEdit = lastShownList.get(index.getZeroBased());
         Person editedPerson = createEditedPerson(personToEdit, editPersonDescriptor);
-        Person personToOverride = findPersonToOverride(model, personToEdit, editedPerson);
 
-        if (personToOverride != null) {
-            model.deletePerson(personToOverride, context.getAppMode());
-        }
+        CommandUtil.resolveDuplicateConflict(model, editedPerson, appMode, personToEdit);
 
-        model.setPerson(personToEdit, editedPerson, context.getAppMode());
-        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, context.getAppMode());
+        model.setPerson(personToEdit, editedPerson, appMode);
+        model.updateFilteredPersonList(PREDICATE_SHOW_ALL_PERSONS, appMode);
         return new CommandResult(String.format(MESSAGE_EDIT_PERSON_SUCCESS, Messages.format(editedPerson)));
     }
 
@@ -104,13 +103,6 @@ public class EditCommand extends Command {
 
         return new Person(updatedName, updatedPhone, updatedEmail, updatedAddress, updatedTags,
                 personToEdit.getStatus());
-    }
-
-    private static Person findPersonToOverride(Model model, Person personToEdit, Person editedPerson) {
-        return model.getPersonList().stream()
-                .filter(person -> !person.equals(personToEdit) && person.isSamePerson(editedPerson))
-                .findFirst()
-                .orElse(null);
     }
 
     @Override

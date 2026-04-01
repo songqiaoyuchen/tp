@@ -81,15 +81,12 @@ public class AddCommand extends Command {
     public CommandResult execute(CommandContext context) throws CommandException {
         requireNonNull(context);
         Model model = context.getModel();
+        AppMode appMode = context.getAppMode();
 
-        Person personToAdd = createPersonForMode(context.getAppMode());
-        Person personToOverride = findSamePerson(model, personToAdd);
+        Person personToAdd = createPersonForMode(appMode);
+        CommandUtil.resolveDuplicateConflict(model, personToAdd, appMode, null);
 
-        if (personToOverride != null) {
-            model.deletePerson(personToOverride, context.getAppMode());
-        }
-
-        model.addPerson(personToAdd, context.getAppMode());
+        model.addPerson(personToAdd, appMode);
         return new CommandResult(String.format(MESSAGE_SUCCESS, Messages.format(personToAdd)));
     }
 
@@ -99,13 +96,6 @@ public class AddCommand extends Command {
 
     private static PersonStatus getStatusForMode(AppMode appMode) {
         return appMode == AppMode.LOCKED ? PersonStatus.LOCKED : PersonStatus.UNLOCKED;
-    }
-
-    private static Person findSamePerson(Model model, Person target) {
-        return model.getPersonList().stream()
-                .filter(target::isSamePerson)
-                .findFirst()
-                .orElse(null);
     }
 
     @Override
