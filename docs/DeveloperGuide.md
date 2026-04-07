@@ -257,7 +257,7 @@ This section describes some noteworthy details on how certain features are imple
 
 ### Setup Password Implementation
 
-The current setup feature allows users to configure a secure password for their vault. Setting up a valid password is mandatory to ensure the privacy of the Unlocked mode. The setup mechanism switches the user interface to a dedicated view via `SetupPanel`.
+The current setup feature allows users to configure a secure password for their application. Setting up a valid password is mandatory to ensure the privacy of the Unlocked mode. The setup mechanism switches the user interface to a dedicated view via `SetupPanel`.
 
 The setup initialization is facilitated by `MainWindow`, `SecurityManager`, and `LogicManager`. It securely delegates the
 exact UI state change back to the UI context.
