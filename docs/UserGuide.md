@@ -46,6 +46,24 @@ SpyGlass is a desktop app for managing public and secret contacts, optimised for
 
 --------------------------------------------------------------------------------------------------------------------
 
+## User Interface Overview
+![ui-overview](images/ui-overview.jpg)
+
+This is the main interface of SpyGlass. It consists of:
+
+* **Contact List** — Displays all contacts in your current view. In Locked mode, you see your public contacts only; in Unlocked mode, you see both public and sensitive contacts.
+* **Contact Details** — Displays contact information in full detail (with email, address etc.) of the currently selected contact.
+* **Command Box** — This is where you enter commands to interact with SpyGlass. Type your command here and press **Enter** to execute it.
+* **Result History** - Displays the list of feedback messages of the commands you entered in the command box.
+
+<box type="tip" seamless>
+
+**Tip — Command Box History:** You can use up and down arrow keys to cycle through your past commands in the current mode to quickly access and modify past commands.
+
+</box>
+
+--------------------------------------------------------------------------------------------------------------------
+
 ## Features
 
 <box type="info" seamless>
