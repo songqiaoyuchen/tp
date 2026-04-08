@@ -58,7 +58,10 @@ This is the main interface of SpyGlass. It consists of:
 
 <box type="tip" seamless>
 
-**Tip — Command Box History:** You can use up and down arrow keys to cycle through your past commands in the current mode to quickly access and modify past commands.
+**Tip — Keyboard Navigation:**
+
+* Use <kbd>Up</kbd> and <kbd>Down</kbd> in the Command Box to cycle through your past commands in the current mode, so you can quickly reuse and modify them.
+* Use <kbd>Tab</kbd> and <kbd>Shift</kbd>+<kbd>Tab</kbd> to cycle through the displayed contact list. The selected contact will be highlighted and its full details will appear in the Contact Details panel.
 
 </box>
 
