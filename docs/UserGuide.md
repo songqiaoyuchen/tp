@@ -178,6 +178,28 @@ Examples:
 * `find alex david` returns `Alex Yeoh`, `David Li`<br>
   ![result for 'find alex david'](images/findAlexDavidResult.png)
 
+#### Viewing a contact : `view`
+
+Displays detailed information for a specific contact by selecting them using their index number.
+
+**Format:** `view INDEX`
+
+* Views the person identified by the index number shown in the displayed person list.
+* The index **must be a positive integer** 1, 2, 3, …​
+* The contact details will be displayed in the Details Panel for full viewing.
+
+<box type="info" seamless>
+
+**Note:** The `view` command is available in both Locked and Unlocked modes. In Locked mode, you can only view public contacts, while in Unlocked mode, you can view both public and sensitive contacts.
+
+</box>
+
+**Examples:**
+* `view 1` displays the details of the 1st contact in the currently displayed list.
+* `find John` followed by `view 1` displays the details of the 1st person in the search results.
+
+![View command ui](images/ViewCommandUi.png)
+
 #### Deleting a person : `delete`
 
 Deletes the specified person from the address book.
