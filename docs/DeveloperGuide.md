@@ -574,7 +574,7 @@ The sequence diagram below shows the successful unlock path and the incorrect-pa
 **MSS**
 
 1. User enters the **`add`** command with the required contact details.
-2. Spyglass **validates** the fields and checks whether the contact **already exists** in the current mode.
+2. Spyglass **validates** the fields and checks whether the new contact duplicates an existing contact in the address book.
 3. Spyglass **saves** the new contact to the current mode’s contact list.
 4. Spyglass **updates** the displayed list and **highlights** the newly added contact when possible.
 
@@ -585,11 +585,22 @@ The sequence diagram below shows the successful unlock path and the incorrect-pa
     * 2a2. The contact is **not added**.
       Use case ends.
 
-* 2b. The contact **already exists** in the current mode.
-    * 2b1. If Spyglass is in **Locked mode** and the duplicate is a **sensitive contact**, Spyglass **replaces** the sensitive contact instead of rejecting the command.
-    * 2b2. Otherwise, Spyglass shows an **error message** indicating the duplicate.
-    * 2b3. If the duplicate is **rejected**, the contact is **not added**.
-      Use case ends.
+* 2b. The new contact duplicates an existing contact in the address book
+  (i.e. it has the **same phone number** and the **same name ignoring case**).
+    * 2b1. Spyglass is in **Unlocked mode**.
+        * 2b1a. Spyglass shows a duplicate-contact error.
+        * 2b1b. The contact is **not added**.
+          Use case ends.
+
+    * 2b2. Spyglass is in **Locked mode**.
+        * 2b2a. The duplicate is a hidden **Sensitive** contact.
+            * 2b2a1. Spyglass **replaces** the hidden contact with the new contact.
+              Use case resumes.
+
+        * 2b2b. The duplicate is a **Public** contact.
+            * 2b2b1. Spyglass shows a duplicate-contact error.
+            * 2b2b2. The contact is **not added**.
+              Use case ends.
 
 **Use case: UC5 - Edit a contact**
 
@@ -616,11 +627,22 @@ The sequence diagram below shows the successful unlock path and the incorrect-pa
     * 2a2. The contact is **not changed**.
       Use case ends.
 
-* 3a. The edited contact would **duplicate** an existing contact.
-    * 3a1. If Spyglass is in **Locked mode** and the duplicate is a **sensitive contact**, Spyglass updates the sensitive contact by **overriding** it.
-    * 3a2. Otherwise, Spyglass shows an **error message** indicating the duplicate.
-    * 3a3. If the duplicate is **rejected**, the contact is **not changed**.
-      Use case ends.
+* 3a. The edited contact duplicates an existing contact in the address book
+  (i.e. it has the **same phone number** and the **same name ignoring case**).
+    * 3a1. Spyglass is in **Unlocked mode**.
+        * 3a1a. Spyglass shows a duplicate-contact error.
+        * 3a1b. The edit is **not applied**.
+          Use case ends.
+
+    * 3a2. Spyglass is in **Locked mode**.
+        * 3a2a. The duplicate is a hidden **Sensitive** contact.
+            * 3a2a1. Spyglass **overrides** the hidden contact with the new edits.
+              Use case resumes.
+
+        * 3a2b. The duplicate is a **Public** contact.
+            * 3a2b1. Spyglass shows a duplicate-contact error.
+            * 3a2b2. The edit is **not applied**.
+              Use case ends.
 
 **Use case: UC6 - Delete a contact**
 

@@ -232,13 +232,27 @@ Adds a person to the address book.
   * Contacts added in **Unlocked mode** are set to **Sensitive** by default.
   * Contacts added in **Locked mode** are set to **Public** by default.
   * To change a contact's status after adding, refer to the [toggle](#toggling-a-contact-status-toggle) command.
-* If the new contact duplicates an existing contact, Spyglass **rejects** the command in **Unlocked Mode**. In **Locked mode**, if the duplicate is an existing `Sensitive` contact, Spyglass **overrides** that sensitive contact instead.
 
-**Parameters**
+##### Duplicate handling
+
+* SpyGlass treats two contacts as duplicates only if they have the **same phone number** and the **same name, ignoring case**.
+* In **Unlocked mode:**
+  * if the new contact duplicates any existing contact, SpyGlass shows a duplicate-contact error and does **not** add the new contact.
+* In **Locked mode:**
+  * If the new contact duplicates a hidden **Sensitive** contact from Unlocked mode, SpyGlass overrides that hidden **Sensitive** contact instead of rejecting the command.
+  * If the new contact duplicates an existing **Public** contact, SpyGlass shows a duplicate-contact error and does **not** add the new contact.
+
+Example:
+* If you see a contact named `Kevin` in the current contact list with phone number `29842040`:
+  * `add -n KEVIN -p 29842040 -e kevin2@example.com -a 456 Street` will be **rejected** as a duplicate because **both the phone number and the name (ignoring case) match**.
+  * `add -n KEVIN -p 2234 -e kevin2@example.com -a 456 Street` will be **allowed** because the **phone number is different**.
+  * `add -n Kelvin -p 29842040 -e kelvin@example.com -a 456 Street` will be **allowed** because the **name is different**.
+
+##### Parameter Constraints
 
 `add` parameters follow the constraints below:
 
-| Parameter | Prefix | Required | Constraints | Parameter Example |
+| Parameter | Prefix | Required (only for `add`) | Constraints | Parameter Example |
 | --- | --- | --- | --- | --- |
 | Name | `-n` | Yes | Must be non-empty after trimming. Only alphanumeric characters and spaces. No punctuation such as `'`, `-`, `_`, `.`. | `-n Alice Tan` |
 | Phone | `-p` | Yes | Must be non-empty after trimming. Digits only, minimum 3 digits. | `-p 98765432` |
@@ -294,11 +308,11 @@ If a value includes special characters that are rejected, normalize it first (fo
 * You can **remove all** the person’s tags by typing `-t ` without specifying any tags after it.
 * If the input values are identical to the existing values, the command will still result in a "Success" message.
 * After a successful edit, Spyglass keeps the edited contact **highlighted**.
-* If the edited contact would duplicate an existing contact, Spyglass **rejects** the command in **Unlocked mode**. In **Locked mode**, if the duplicate is an existing `Sensitive` contact, Spyglass **overrides** that hidden contact instead. Otherwise, the command is **rejected**.
 
 <box type="info" seamless>
 
-**Note:** All edited fields must conform to the specific requirements and constraints (such as character limits and patterns) specified in the [add](#adding-a-person-add) command.
+**Note:** All edited fields must conform to the same [Parameter Constraints](#parameter-constraints) specified in the [`add`](#adding-a-person-add) command. [Duplicate handling](#duplicate-handling) for `edit` also follows the same rules as [`add`](#adding-a-person-add).
+
 </box>
 
 **Examples:**
