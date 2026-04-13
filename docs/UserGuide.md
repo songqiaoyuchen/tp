@@ -77,6 +77,14 @@ For the examples in the rest of this guide, we will assume you have set your pas
 
 <box type="info" seamless>
 Your password cannot be empty, contain spaces or non-standard symbols (emojis, foreign language characters).
+
+</box>
+
+<box type="warning" seamless>
+
+**Caution:**
+Password entry is currently visible while typing (not masked). Perform password setup only in a trusted environment where your screen and keyboard input cannot be observed.
+
 </box>
 
 ![initial setup with myPassword123](images/initialSetup.png)
@@ -446,6 +454,14 @@ Spyglass data are saved in the hard disk **automatically** after any command tha
 Spyglass data for unlocked and locked modes are saved automatically as a JSON file **`[JAR file location]/data/addressbook.json`**. Advanced users are welcome to update data directly by editing that data file.
 
 The file stores the **contact data at the top**, followed by your **password**.
+
+<box type="warning" seamless>
+
+**Caution:**
+* The password is stored in plaintext in the local data file (no file encryption).
+* This project assumes the app is used in a secure environment (for example, a personal device that is already protected by OS/login controls). Therefore, data-file encryption is intentionally not used
+
+</box>
 
 <box type="warning" seamless>
 
